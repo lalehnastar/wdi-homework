@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // 1-A function which takes two numbers and returns their sum
+    function add2Nums(num1,num2){
+result = num1+num2
+return result
+    }
+  
+    
+    console.log(add2Nums(9,4))
+
+
+// 2- A function which takes 4 numbers and returns their sum
+
+    function add4Nums(num1,num2,num3,num4){
+result = add2Nums(num1,num2)
+result = add2Nums(result, num3)
+result = add2Nums(result, num4)
+return result
+    }
+  
+    
+    console.log(add4Nums(9,4,1,2));
+
+//3-  A function which takes no arguments and prints the value of a variable `R` which has the value `"Roberto" and is defined inside the function.
+function printLocalR(){
+
+
+
+var R = 'Roberto';
+
+return R
+
+}
+console.log(printLocalR())
+//3- A function which takes no arguments and prints the value of a variable `R` which has the value `"Rio De Janeiro"` and is defined in the global scope
+
+
+var R = 'Rio De Janeiro';
+function printLocalR(){
+return R
+
+}
+console.log(printLocalR())
+    </script>
+</body>
+</html>
