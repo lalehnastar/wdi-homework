@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tic Tac Toe</title>
+    <script src="js/jquery-3.3.1.js"></script>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            display: inline-block;
+            background-color: green;
+            vertical-align: top;
+            border-radius: 20%;
+            text-align: center;
+        }
+        #grid {
+            width: 330px;
+        }
+        img {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tic Tac Toe</h1>
+    <div id="grid">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <script>
+        var game = {
+            players: [{ name: 'Porky', pic: 'images/porky.gif' }, { name: 'Taz', pic: 'images/taz.png' }],
+            currentPlayer: null,
+            done: false,
+            winner: false,
+            init: function () {
+                console.log('Game initialized')
+                game.currentPlayer = game.players[1]
+            },
+            switchPlayer: function () {
+                if (game.currentPlayer === game.players[0]) {
+                    game.currentPlayer = game.players[1]
+                } else {
+                    game.currentPlayer = game.players[0]
+                }
+            },
+            checkIndices: function (firstIndex, secondIndex, thirdIndex) {
+                var firstHtml = $('.box').eq(firstIndex).html();
+                var secondHtml = $('.box').eq(secondIndex).html();
+                var thirdHtml = $('.box').eq(thirdIndex).html();
+
+                if(firstHtml === "")
+                    return false;
+                if(secondHtml === "")
+                    return false;
+                if(thirdHtml === "")
+                    return false;
+
+                var result = (firstHtml === secondHtml && secondHtml === thirdHtml);
+                return result;
+            },
+            checkFirstRow: function () {
+                return this.checkIndices(0, 1, 2);
+            },
+            checkSecondRow: function () {
+                return this.checkIndices(3, 4, 5);
+            },
+            checkThirdRow: function () {
+                return this.checkIndices(6, 7, 8);
+            },
+            checkFirstCol: function () {
+                return this.checkIndices(0, 3, 6);
+            },
+            checkSecondCol: function () {
+                return this.checkIndices(1, 4, 7);
+            },
+            checkThirdCol: function () {
+                return this.checkIndices(2, 5, 8);
+            },
+            checkFirstDiagnol: function () {
+                return this.checkIndices(0, 4, 8);
+            },
+            checkSecondDiagnol: function () {
+                return this.checkIndices(2, 4, 6);
+            },
+            checkWin: function () {
+                var result = this.checkFirstRow() || this.checkSecondRow() || this.checkThirdRow()
+                    || this.checkFirstCol() || this.checkSecondCol() || this.checkThirdCol()
+                    || this.checkFirstDiagnol() || this.checkSecondDiagnol();
+
+                game.winner = result;
+
+                return result;
+            }
+        }
+
+        game.init()
+
+        var boxes = $('.box')
+        function clickHandler(evt) {
+            if ($(this).html() === '') {
+                var image = '<img src="' + game.currentPlayer.pic + '" />'
+                $(this).html(image);
+
+                var didWin = game.checkWin();
+                if (didWin) {
+                    alert("Congrats! Player " + game.currentPlayer.name + " wins!");
+                }
+                else {
+                    game.switchPlayer();
+                }
+            } else {
+                alert('Box taken click another one')
+            }
+        }
+        boxes.on('click', clickHandler);
+    </script>
+</body>
+</html>
